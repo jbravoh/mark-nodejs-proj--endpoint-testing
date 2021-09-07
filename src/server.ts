@@ -69,4 +69,53 @@ app.get("/quest/decline", (req, res) => {
   });
 });
 
+app.get("/quest/start/easy", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "Smart choice! To complete this endpoint adventure, you must complete tasks along the way. Let's begin!"
+    },
+    options: {
+      beginQuest: "/quest/start/easy/first-task",
+    }
+  })
+})
+
+app.get("/quest/start/hard", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "So you want to be tested, let's see if you can last. To complete the endpoint adventure you must complete tasks along the way. Let's begin!"
+    },
+    options: {
+      beginQuest: "/quest/start/hard/first-task",
+    }
+  })
+})
+
+
+app.get("/quest/start/impossible", (req, res) => {
+  res.json({
+    location: "Apocolypse",
+    speech: {
+      speaker: {
+        name: "Titan, Destroyer of Worlds",
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "You will now experience excruciating pain from a dragon's fireball. MWAHAHAHA!"
+    },
+    options: {
+      restart: "/",
+    }
+  })
+})
+
 export default app;

@@ -56,7 +56,7 @@ test("GET /quest/decline responds with an apocalyptic message", async () => {
   expect(response.body.options).toStrictEqual({ restart: "/" });
 });
 
-test.skip("GET /quest/start/impossible responds with instant 'death'", async () => {
+test("GET /quest/start/impossible responds with instant 'death'", async () => {
   const response = await supertest(app).get("/quest/start/impossible");
 
   // there is _some_ location
@@ -73,3 +73,36 @@ test.skip("GET /quest/start/impossible responds with instant 'death'", async () 
   // includes option to restart
   expect(response.body.options).toMatchObject({ restart: "/" });
 });
+
+
+test("GET /quest/help has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/help");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/endpoint/i);
+  expect(response.body.speech.text).toMatch(/adventure/i);
+  expect(response.body.options).toMatchObject({ backToStart: "/" });
+})
+
+
+test("GET /quest/start/easy has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/quest/start/easy");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/complete/i);
+  expect(response.body.speech.text).toMatch(/smart/i);
+  expect(response.body.options).toMatchObject({ beginQuest: "/quest/start/easy/first-task" });
+})
+
+
+test("GET /quest/start/hard has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/quest/start/hard");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/tested/i);
+  expect(response.body.speech.text).toMatch(/tasks/i);
+  expect(response.body.options).toMatchObject({ beginQuest: "/quest/start/hard/first-task" });
+})
