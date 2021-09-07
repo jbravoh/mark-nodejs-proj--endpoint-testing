@@ -69,4 +69,106 @@ app.get("/quest/decline", (req, res) => {
   });
 });
 
+app.get("/quest/start/easy", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "Smart choice! To complete this endpoint adventure, you must complete tasks along the way. Let's begin!"
+    },
+    options: {
+      beginQuest: "/quest/start/easy/first-task",
+    }
+  })
+})
+
+app.get("/quest/start/hard", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "So you want to be tested, let's see if you can last. To complete the endpoint adventure you must complete tasks along the way. Let's begin!"
+    },
+    options: {
+      beginQuest: "/quest/start/hard/first-task",
+    }
+  })
+})
+
+
+app.get("/quest/start/impossible", (req, res) => {
+  res.json({
+    location: "Apocolypse",
+    speech: {
+      speaker: {
+        name: "Titan, Destroyer of Worlds",
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "You will now experience excruciating pain from a dragon's fireball. MWAHAHAHA!"
+    },
+    options: {
+      restart: "/",
+    }
+  })
+})
+
+
+app.get("/quest/start/easy/first-task", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "The first task is to remove yourself from distactions by switching off your phone. It must be done now"
+    },
+    options: {
+      taskComplete: "/quest/start/easy/second-task",
+      taskFailed: "/quest/failed-task-one"
+    }
+  })
+})
+
+app.get("/quest/start/hard/first-task", (req, res) => {
+  res.json({
+    location: CAVE_EXTERIOR,
+    speech: {
+      speaker: {
+        name: MYSTERIOUS_ROBED_FIGURE,
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "The first task is to remove yourself from distractions by deleting all social media and switching off your phone. Not many complete this task"
+    },
+    options: {
+      taskComplete: "/quest/start/hard/second-task",
+      taskFailed: "/quest/failed-task-one"
+    }
+  })
+})
+
+
+app.get("/quest/failed-task-one", (req, res) => {
+  res.json({
+    location: "Apocolypse",
+    speech: {
+      speaker: {
+        name: "Titan, Destroyer of Worlds",
+        description: "A short but fierce looking demon-thing",
+      },
+      text: "WHAT A JOKE! You couldn't even complete the first task. Now you must experience a fiery death!!!"
+    },
+    options: {
+      restart: "/",
+      
+    }
+  })
+})
+
 export default app;
