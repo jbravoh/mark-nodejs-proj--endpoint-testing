@@ -106,3 +106,37 @@ test("GET /quest/start/hard has a message from the advernture admin ", async () 
   expect(response.body.speech.text).toMatch(/tasks/i);
   expect(response.body.options).toMatchObject({ beginQuest: "/quest/start/hard/first-task" });
 })
+
+// Exericse 5
+
+test("GET /quest/start/easy/first-task has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/quest/start/easy/first-task");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/remove/i);
+  expect(response.body.speech.text).toMatch(/phone/i);
+  expect(response.body.options).toMatchObject({ taskComplete: "/quest/start/easy/second-task",
+  taskFailed: "/quest/failed-task-one" });
+})
+
+test("GET /quest/start/hard/first-task has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/quest/start/hard/first-task");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/distractions/i);
+  expect(response.body.speech.text).toMatch(/social/i);
+  expect(response.body.options).toMatchObject({ taskComplete: "/quest/start/hard/second-task",
+  taskFailed: "/quest/failed-task-one" });
+})
+
+test("GET /quest/failed-task-one has a message from the advernture admin ", async () => {
+  const response = await supertest(app).get("/quest/failed-task-one");
+  
+  expect(response.body.location).toBeDefined();
+  expect(response.body.speech.speaker.name).toBeDefined();
+  expect(response.body.speech.text).toMatch(/complete/i);
+  expect(response.body.speech.text).toMatch(/death/i);
+  expect(response.body.options).toMatchObject({ restart: "/" });
+})
